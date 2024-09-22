@@ -1,0 +1,48 @@
+body{
+    background-color: grey;
+    /* color: white; */
+}
+
+
+table{
+    background-color: black;
+    padding: 1px;
+    border-radius: 5px;
+
+}
+
+.cell{
+    width: 40px;
+    height: 40px;
+    background-color: rgb(80, 26, 132);
+    border-radius: 5px;
+    text-align: center;
+    transition: 0.3s;
+    /* TODOs:  */
+    /* each Cell has 2 background colors to make it buitiful  */
+    /* and the effect is coming slow - 0.3ms */
+    
+}
+
+.cell:hover{
+    cursor: pointer;
+    background-color: blueviolet;
+    
+}
+
+img{
+    width: 43px;
+}
+
+/* TODO: make the mouse cursor chage to img */
+.hint{
+    /* background-color:white; */
+    cursor:url('../img/hint.png') 16 0,auto;
+
+    /* cursor: 💡 */
+/*!emojicursor.app*/
+}
+
+/* .hidden{
+    
+} */

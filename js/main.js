@@ -28,6 +28,7 @@ let gGame;
 let gTimer;
 let gStartTime;
 let gTimerInterval;
+// let gBestScore;
 
 const FLAG = "🚩";
 const MINE = "💣";
@@ -36,13 +37,18 @@ const LIVE = "🩷";
 // "🩷💚🤍💛"
 const HINT = `<img src="img/hint.png" alt="hint icon">`;
 
-const RESTART = "🙂";
-const WON = "😄";
+const EASY = "👶🏼";
+const NORMAL = "🙂";
+const HARD = "😎";
+
+const WON = "🤩";
 const LOSE = "😱";
 
 // TODOs :
-// check in the web about cool minesweeper styles
-// start the BONUSES !! :))
+// levels
+// BONUS - best score , local storage ( level, time )
+//
+//
 
 /*
  An Idea about adding Yu-Gi-Oh here!
@@ -50,10 +56,12 @@ const LOSE = "😱";
  And if you lose so Exodia is free
 */
 
-function onInit() {
+function onInit(level = { s: 4, m: 3, l: "easy" }) {
+  // m:4
   gLevel = {
-    SIZE: 4,
-    MINES: 3,
+    SIZE: level.s,
+    MINES: level.m,
+    LEVEL: level.l,
   };
 
   gGame = {
@@ -65,12 +73,18 @@ function onInit() {
     hints: 3,
   };
 
+  // gBestScore = {
+  //   currScore: null,
+  //   bestScore: null,
+  // };
+
   clearInterval(gTimerInterval);
   gTimerInterval = null;
+  localStorage.clear();
 
   gBoard = buildBoard(gLevel.SIZE);
   renderBoard(gBoard);
-  renderRestartBtn(RESTART);
+  renderLevelBtn();
   renderLives(gGame.lives);
   renderHints(gGame.hints);
   renderTimer();
@@ -99,9 +113,7 @@ function buildCell(board, cellCords) {
 
 function renderBoard(board) {
   let strHTML = "";
-  // console.log("ss: ");
 
-  // console.table(board);
   for (let i = 0; i < board.length; i++) {
     strHTML += "<tr>";
     for (let j = 0; j < board[0].length; j++) {
@@ -111,7 +123,7 @@ function renderBoard(board) {
 
       let cellContent = cell.isMarked ? FLAG : "";
 
-      strHTML += `<td class="cell cell-${i}-${j}" onclick="onCellClicked(${i}, ${j})" oncontextmenu="onCellMarked(this,${i}, ${j})" >${cellContent}</td>`;
+      strHTML += `<td class="cell cell-${i}-${j}" onclick="onCellClicked(this, ${i}, ${j})" oncontextmenu="onCellMarked(this,${i}, ${j})" >${cellContent}</td>`;
     }
     strHTML += "</tr>";
   }
@@ -126,13 +138,29 @@ function setMinesNegsCount(board, cellCords) {
   return countNegMines(board, i, j);
 }
 
-function onCellClicked(i, j) {
+function onCellClicked(elCell, i, j) {
   const cell = gBoard[i][j];
+  const isHint = elCell.classList.contains("hint");
 
   if (!gGame.shownCount) {
     gGame.isOn = true;
     startGame({ i, j });
     startTimer();
+  }
+
+  if (isHint) {
+    console.log("in");
+    onHintClicked();
+    gGame.hints--;
+    renderHints(gGame.hints);
+
+    const expandCellCords = getExpandCellCords(gBoard, i, j);
+    console.log("expandCellCords: ", expandCellCords);
+    setTimeout(() => unexpandCells(expandCellCords), 1000);
+    // updateCell(cell, { i, j });
+    return;
+
+    // hintEffect()  or  hintUsed()
   }
 
   if (cell.isMarked || !gGame.isOn || cell.isShown) return;
@@ -145,12 +173,19 @@ function onCellClicked(i, j) {
   } else if (cell.minesAroundCount === 0 && !cell.isShown) {
     expandShown(gBoard, i, j);
   }
-  gGame.isOn = true;
+  updateCell(cell, { i, j });
+}
+
+function updateCell(cell, cords) {
+  const { i, j } = cords;
+  // gGame.isOn = true;
   if (cell.minesAroundCount && !cell.isMine) gGame.shownCount++;
 
   cell.isShown = true;
 
-  const cellContent = cell.isMine ? MINE : cell.minesAroundCount;
+  let cellContent = cell.isMine ? MINE : cell.minesAroundCount;
+  if (cell.minesAroundCount === 0 && !cell.isMine) cellContent = "";
+
   renderCell({ i, j }, cellContent);
 
   checkGameOver();
@@ -189,7 +224,7 @@ function addMines(cellClickedCords) {
     }
     gBoard[randomCords.i][randomCords.j].isMine = true;
   }
-    */
+  */
 
   // and delete those lines
   gBoard[2][2].isMine = true;
@@ -204,13 +239,16 @@ function checkGameOver() {
 
   if (!gGame.lives) {
     console.log("YOU LOSE");
-    renderRestartBtn(LOSE);
+    // renderLevelBtn('win-lose',LOSE);
+    document.querySelector(".win-lose").innerHTML = LOSE;
     gGame.isOn = false;
     revealMines();
     stopTimer();
   } else if (gGame.lives && isAllCellsShown && isAllMinesMarked) {
     console.log("YOU WON");
-    renderRestartBtn(WON);
+    document.querySelector(".win-lose").innerHTML = WON;
+    // renderLevelBtn('win-lose',WON);
+    updateBestScore();
     gGame.isOn = false;
     stopTimer();
   }
@@ -228,11 +266,44 @@ function expandShown(board, cellI, cellJ) {
       if (!cell.isMine && !cell.isShown && !cell.isMarked) {
         cell.isShown = true;
         gGame.shownCount++;
-        let cellContent = cell.isMarked ? FLAG : board[i][j].minesAroundCount;
+        let cellContent = cell.isMarked ? FLAG : cell.minesAroundCount;
+        if (cell.minesAroundCount === 0) cellContent = "";
         renderCell({ i, j }, cellContent);
+
         if (cell.minesAroundCount === 0) expandShown(board, i, j);
       }
     }
+  }
+}
+
+function getExpandCellCords(board, cellI, cellJ) {
+  let expandCellCords = [];
+  for (let i = cellI - 1; i <= cellI + 1; i++) {
+    if (i < 0 || i >= board.length) continue;
+
+    for (let j = cellJ - 1; j <= cellJ + 1; j++) {
+      if (j < 0 || j >= board[i].length) continue;
+
+      const cell = board[i][j];
+      if (!cell.isMine && !cell.isShown && !cell.isMarked) {
+        cell.isShown = true;
+        let cellContent = cell.isMarked ? FLAG : cell.minesAroundCount;
+        renderCell({ i, j }, cellContent);
+
+        expandCellCords.push({ i, j });
+      }
+    }
+  }
+  return expandCellCords;
+}
+
+function unexpandCells(cords) {
+  for (let idx = 0; idx < cords.length; idx++) {
+    const { i, j } = cords[idx];
+    const cell = gBoard[i][j];
+    cell.isShown = false;
+    let cellContent = cell.isMarked ? FLAG : "";
+    renderCell({ i, j }, cellContent);
   }
 }
 
@@ -255,10 +326,14 @@ function renderLives(amount) {
 //   return false;
 // }
 
-function renderRestartBtn(value) {
-  const elBtn = document.querySelector(".restart");
+function renderLevelBtn() {
+  const elEasyBtn = document.querySelector(`.easy`);
+  const elNormalBtn = document.querySelector(`.normal`);
+  const elHardBtn = document.querySelector(`.hard`);
 
-  elBtn.innerText = value;
+  elEasyBtn.innerHTML = EASY;
+  elNormalBtn.innerHTML = NORMAL;
+  elHardBtn.innerHTML = HARD;
 }
 
 function revealMines() {
@@ -314,25 +389,64 @@ function renderHints(amount) {
   for (let i = 0; i < amount; i++) {
     hints += HINT;
   }
+  // elHints.style.cursor = "pointer";
   elHints.innerHTML = hints;
 }
 
 function onHintClicked() {
-  // let elementToChange = document.getElementsByTagName("body")[0];
-  // (elementToChange.style.cursor = url(
-  //   "http://wiki-devel.sugarlabs.org/images/e/e2/Arrow.cur"
-  // )),
-  //   auto;
-
-  // (document.body.style.cursor = cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>🍀</text></svg>") 16 0,auto;
-
-  // console.log("document.body.style.cursor: ", document.body.style);
-
-  // console.log("check ");
-
+  if (!gGame.isOn) return;
   const elTable = document.querySelector("table");
+  const elCells = document.querySelectorAll(".cell");
   const elHints = document.querySelector(".hints");
 
-  elTable.classList.add("hint");
-  elHints.classList.add("hint");
+  for (let i = 0; i < elCells.length; i++) {
+    elCells[i].classList.toggle("hint");
+  }
+
+  elTable.classList.toggle("hint");
+  elHints.classList.toggle("hint");
+}
+
+/*
+ gLevel = {
+    SIZE: level.s,
+    MINES: level.m,
+    LEVEL: level.l,
+  };
+*/
+
+// function addScore(){
+
+// }
+
+function updateBestScore() {
+  const elTimer = document.querySelector(".timer");
+  // {easy , 00:02:90}
+
+  // TODO: update the best score and arrange the renderScore
+
+  const boardSize = gLevel.SIZE;
+  const level = gLevel.LEVEL;
+  const timer = elTimer.innerText;
+
+  let boardSizeItem = localStorage.getItem("bestScoreSize");
+  let levelItem = localStorage.getItem("bestScoreLevel");
+  let timerItem = localStorage.getItem("bestScoreTime");
+
+  if (!localStorage.getItem("bestScoreSize")) {
+    localStorage.setItem("bestScoreSize", boardSize);
+    localStorage.setItem("bestScoreLevel", level);
+    localStorage.setItem("bestScoreTime", timer);
+  }
+
+  renderBestScore();
+}
+
+function renderBestScore() {
+  let boardSizeItem = localStorage.getItem("bestScoreSize");
+  let levelItem = localStorage.getItem("bestScoreLevel");
+  let timerItem = localStorage.getItem("bestScoreTime");
+
+  const elBestScore = document.querySelector(".best-score");
+  elBestScore.innerHTML = `You'r best score is:${levelItem} ${timerItem}`;
 }

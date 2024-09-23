@@ -9,7 +9,18 @@
   <!-- <body onload="onInit()" mouseup="onKey(event)" oncontextmenu="return false;"> -->
   <body onload="onInit()" mouseup="onKey(event)" oncontextmenu="return false">
     <div class="header">
-      <button class="restart" onclick="onInit()">🙂</button>
+      <div class="win-lose"></div>
+      <div class="levelBtns">
+        <button class="easy" onclick="onInit({ s: 4, m: 3, l:'easy' })">
+          🙂
+        </button>
+        <button class="normal" onclick="onInit({ s: 8, m: 3, l:'normal' })">
+          🙂
+        </button>
+        <button class="hard" onclick="onInit({ s: 16, m: 3, l:'hard' })">
+          🙂
+        </button>
+      </div>
       <div class="live"></div>
       <div class="timer"></div>
     </div>

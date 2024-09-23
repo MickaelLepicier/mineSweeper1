@@ -23,6 +23,7 @@ function countNegMines(board, cellI, cellJ) {
 function renderCell(location, content) {
   // Select the elCell and set the value
   var elCell = document.querySelector(`.cell-${location.i}-${location.j}`);
+  elCell.classList.add("shown");
   elCell.innerHTML = content;
 }
 

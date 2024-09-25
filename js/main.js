@@ -25,10 +25,10 @@ isMarked: true
 
 let gLevel;
 let gGame;
-let gTimer;
+// let gTimer;
 let gStartTime;
 let gTimerInterval;
-// let gBestScore;
+let gManualMinesLocations;
 
 const FLAG = "🚩";
 const MINE = "💣";
@@ -36,6 +36,7 @@ const BOOM = "💥";
 const LIVE = "🩷";
 // "🩷💚🤍💛"
 const HINT = `<img src="img/hint.png" alt="hint icon">`;
+// const SAFE = "";
 
 const EASY = "👶🏼";
 const NORMAL = "🙂";
@@ -46,17 +47,20 @@ const LOSE = "😱";
 
 // TODOs :
 // levels
-// BONUS - best score , local storage ( level, time )
+// BONUS - manual mode
 //
 //
 
 /*
- An Idea about adding Yu-Gi-Oh here!
- The player have 5 lives and the mines are Exodia cards
- And if you lose so Exodia is free
+ An Idea about adding Lego here!
+ 
 */
 
-function onInit(level = { s: 4, m: 3, l: "easy" }) {
+function onInit(
+  level = { s: 4, m: 3, l: "Easy" },
+  clearStorage = true,
+  onManual = false
+) {
   // m:4
   gLevel = {
     SIZE: level.s,
@@ -66,28 +70,37 @@ function onInit(level = { s: 4, m: 3, l: "easy" }) {
 
   gGame = {
     isOn: false,
-    shownCount: 0,
+    shownCount: -1,
     minesShownCount: 0,
     markedCount: 0,
     lives: 3,
     hints: 3,
+    safe: 3,
+    isManual: onManual,
+    // x: false,
   };
 
-  // gBestScore = {
-  //   currScore: null,
-  //   bestScore: null,
-  // };
+  console.log("gGame.isManual: ", gGame.isManual);
+
+  if (!onManual) gManualMinesLocations = [];
+
+  // console.log("gManualMinesLocations: ", gManualMinesLocations);
 
   clearInterval(gTimerInterval);
   gTimerInterval = null;
-  localStorage.clear();
+  if (clearStorage) localStorage.clear();
 
   gBoard = buildBoard(gLevel.SIZE);
+  // render() = render all the functions
   renderBoard(gBoard);
   renderLevelBtn();
   renderLives(gGame.lives);
   renderHints(gGame.hints);
   renderTimer();
+  renderBestScore();
+  renderSafe();
+
+  document.querySelector(".win-lose").innerHTML = "";
 }
 
 function buildBoard(size) {
@@ -142,14 +155,20 @@ function onCellClicked(elCell, i, j) {
   const cell = gBoard[i][j];
   const isHint = elCell.classList.contains("hint");
 
-  if (!gGame.shownCount) {
-    gGame.isOn = true;
+  if (gGame.isManual) {
+    if (elCell.innerHTML === MINE) return;
+    gManualMinesLocations.push({ i, j });
+    renderCell({ i, j }, MINE);
+
+    return;
+  }
+
+  if (gGame.shownCount === -1) {
+    gGame.shownCount++;
     startGame({ i, j });
-    startTimer();
   }
 
   if (isHint) {
-    console.log("in");
     onHintClicked();
     gGame.hints--;
     renderHints(gGame.hints);
@@ -159,8 +178,6 @@ function onCellClicked(elCell, i, j) {
     setTimeout(() => unexpandCells(expandCellCords), 1000);
     // updateCell(cell, { i, j });
     return;
-
-    // hintEffect()  or  hintUsed()
   }
 
   if (cell.isMarked || !gGame.isOn || cell.isShown) return;
@@ -204,15 +221,25 @@ function onCellMarked(elCell, i, j) {
 }
 
 function startGame(cellClickedCords) {
-  addMines(cellClickedCords);
+  gGame.isOn = true;
+  addMines(cellClickedCords, gGame.isManual);
   renderBoard(gBoard);
+  startTimer();
 }
 
-function addMines(cellClickedCords) {
+function addMines(cellClickedCords, isManual = false) {
+  if (isManual) {
+    addManualMines();
+    return;
+  }
+
   // TODO remove */
-  /*
+
+  // maybe put a function - addRandomMines()
   for (let i = 0; i < gLevel.MINES; i++) {
     let randomCords = getRandomCords();
+    // make this code shorter with: const {i,j} = randomCords
+    // and with: const {i,j} = cellClickedCords
 
     if (
       (randomCords.i === cellClickedCords.i &&
@@ -224,12 +251,11 @@ function addMines(cellClickedCords) {
     }
     gBoard[randomCords.i][randomCords.j].isMine = true;
   }
-  */
 
   // and delete those lines
-  gBoard[2][2].isMine = true;
-  gBoard[3][0].isMine = true;
-  gBoard[3][2].isMine = true;
+  // gBoard[2][2].isMine = true;
+  // gBoard[3][0].isMine = true;
+  // gBoard[3][2].isMine = true;
 }
 
 function checkGameOver() {
@@ -248,7 +274,7 @@ function checkGameOver() {
     console.log("YOU WON");
     document.querySelector(".win-lose").innerHTML = WON;
     // renderLevelBtn('win-lose',WON);
-    updateBestScore();
+    bestScore();
     gGame.isOn = false;
     stopTimer();
   }
@@ -273,37 +299,6 @@ function expandShown(board, cellI, cellJ) {
         if (cell.minesAroundCount === 0) expandShown(board, i, j);
       }
     }
-  }
-}
-
-function getExpandCellCords(board, cellI, cellJ) {
-  let expandCellCords = [];
-  for (let i = cellI - 1; i <= cellI + 1; i++) {
-    if (i < 0 || i >= board.length) continue;
-
-    for (let j = cellJ - 1; j <= cellJ + 1; j++) {
-      if (j < 0 || j >= board[i].length) continue;
-
-      const cell = board[i][j];
-      if (!cell.isMine && !cell.isShown && !cell.isMarked) {
-        cell.isShown = true;
-        let cellContent = cell.isMarked ? FLAG : cell.minesAroundCount;
-        renderCell({ i, j }, cellContent);
-
-        expandCellCords.push({ i, j });
-      }
-    }
-  }
-  return expandCellCords;
-}
-
-function unexpandCells(cords) {
-  for (let idx = 0; idx < cords.length; idx++) {
-    const { i, j } = cords[idx];
-    const cell = gBoard[i][j];
-    cell.isShown = false;
-    let cellContent = cell.isMarked ? FLAG : "";
-    renderCell({ i, j }, cellContent);
   }
 }
 
@@ -354,7 +349,7 @@ function revealMines() {
 
 function startTimer() {
   gStartTime = Date.now();
-  gTimerInterval = setInterval(updateTimer, 10);
+  gTimerInterval = setInterval(updateTimer, 60);
 }
 
 function stopTimer() {
@@ -367,18 +362,18 @@ function updateTimer() {
 
   let minutes = Math.floor((currMillSec / (1000 * 60)) % 60);
   let seconds = Math.floor((currMillSec / 1000) % 60);
-  let milliSeconds = Math.floor((currMillSec % 1000) / 10);
+  // let milliSeconds = Math.floor((currMillSec % 1000) / 10);
 
   minutes = String(minutes).padStart(2, "0");
   seconds = String(seconds).padStart(2, "0");
-  milliSeconds = String(milliSeconds).padStart(2, "0");
+  // milliSeconds = String(milliSeconds).padStart(2, "0");
 
-  renderTimer(minutes, seconds, milliSeconds);
+  renderTimer(minutes, seconds);
 }
 
-function renderTimer(minutes = "00", seconds = "00", milliSeconds = "00") {
+function renderTimer(minutes = "00", seconds = "00") {
   const elTimer = document.querySelector(".timer");
-  elTimer.innerText = `${minutes}:${seconds}:${milliSeconds}`;
+  elTimer.innerText = `${minutes}:${seconds}`;
 }
 
 // ~~~~~~~~ BONUS FUNCTIONS ~~~~~~~~
@@ -389,7 +384,7 @@ function renderHints(amount) {
   for (let i = 0; i < amount; i++) {
     hints += HINT;
   }
-  // elHints.style.cursor = "pointer";
+  elHints.style.cursor = "pointer";
   elHints.innerHTML = hints;
 }
 
@@ -407,46 +402,174 @@ function onHintClicked() {
   elHints.classList.toggle("hint");
 }
 
-/*
- gLevel = {
-    SIZE: level.s,
-    MINES: level.m,
-    LEVEL: level.l,
-  };
-*/
+function getExpandCellCords(board, cellI, cellJ) {
+  let expandCellCords = [];
+  for (let i = cellI - 1; i <= cellI + 1; i++) {
+    if (i < 0 || i >= board.length) continue;
 
-// function addScore(){
+    for (let j = cellJ - 1; j <= cellJ + 1; j++) {
+      if (j < 0 || j >= board[i].length) continue;
 
-// }
+      const cell = board[i][j];
+      if (!cell.isShown && !cell.isMarked) {
+        cell.isShown = true;
+        let cellContent = cell.isMarked ? FLAG : cell.minesAroundCount;
+        if (cell.minesAroundCount === 0) cellContent = "";
+        if (cell.isMine) cellContent = MINE;
 
-function updateBestScore() {
+        renderCell({ i, j }, cellContent);
+
+        expandCellCords.push({ i, j });
+      }
+    }
+  }
+  return expandCellCords;
+}
+
+function unexpandCells(cords) {
+  for (let idx = 0; idx < cords.length; idx++) {
+    const { i, j } = cords[idx];
+    const cell = gBoard[i][j];
+    cell.isShown = false;
+    let cellContent = cell.isMarked ? FLAG : "";
+    renderCell({ i, j }, cellContent, false);
+  }
+}
+
+function bestScore() {
   const elTimer = document.querySelector(".timer");
-  // {easy , 00:02:90}
 
-  // TODO: update the best score and arrange the renderScore
+  const currBoardSize = gLevel.SIZE;
+  const currLevel = gLevel.LEVEL;
+  const currTimer = elTimer.innerText;
 
-  const boardSize = gLevel.SIZE;
-  const level = gLevel.LEVEL;
-  const timer = elTimer.innerText;
+  const boardSizeItem = localStorage.getItem("bestScoreSize");
 
-  let boardSizeItem = localStorage.getItem("bestScoreSize");
-  let levelItem = localStorage.getItem("bestScoreLevel");
-  let timerItem = localStorage.getItem("bestScoreTime");
-
-  if (!localStorage.getItem("bestScoreSize")) {
-    localStorage.setItem("bestScoreSize", boardSize);
-    localStorage.setItem("bestScoreLevel", level);
-    localStorage.setItem("bestScoreTime", timer);
+  if (!boardSizeItem) {
+    addItems(currBoardSize, currLevel, currTimer);
+    renderBestScore();
+    return;
   }
 
+  const timerItem = localStorage.getItem("bestScoreTime");
+
+  const bestTime = getTimeObj(timerItem);
+
+  const currTime = getTimeObj(currTimer);
+
+  if (currBoardSize >= boardSizeItem) {
+    // check if the level is higher by the board size
+    if (currBoardSize > boardSizeItem) {
+      updateBestScore(currBoardSize, currLevel, currTimer);
+      return;
+      // check if the best score minutes are smaller then the current minutes
+    } else if (bestTime.minutes < currTime.minutes) {
+      updateBestScore(currBoardSize, currLevel, currTimer);
+      return;
+      // check if the best score seconds are higher then the current seconds
+    } else if (
+      bestTime.minutes === currTime.minutes &&
+      bestTime.seconds >= currTime.seconds
+    ) {
+      updateBestScore(currBoardSize, currLevel, currTimer);
+      return;
+    }
+    renderBestScore();
+  }
+}
+
+function updateBestScore(currBoardSize, currLevel, currTimer) {
+  addItems(currBoardSize, currLevel, currTimer);
   renderBestScore();
 }
 
 function renderBestScore() {
-  let boardSizeItem = localStorage.getItem("bestScoreSize");
   let levelItem = localStorage.getItem("bestScoreLevel");
   let timerItem = localStorage.getItem("bestScoreTime");
+  if (!levelItem && !timerItem) return;
 
-  const elBestScore = document.querySelector(".best-score");
-  elBestScore.innerHTML = `You'r best score is:${levelItem} ${timerItem}`;
+  const elBestScore = document.querySelector(".best-score span");
+  elBestScore.innerHTML = `${levelItem} - ${timerItem}`;
+}
+
+function addItems(currBoardSize, currLevel, currTimer) {
+  localStorage.setItem("bestScoreSize", currBoardSize);
+  localStorage.setItem("bestScoreLevel", currLevel);
+  localStorage.setItem("bestScoreTime", currTimer);
+}
+
+function getTimeObj(str) {
+  const splitTime = str.split(":");
+  const timeObj = { minutes: +splitTime[0], seconds: +splitTime[1] };
+
+  return timeObj;
+}
+
+function onSafeClick() {
+  if (!gGame.isOn || !gGame.safe) return;
+
+  const emptyCells = getTargetedCells(false);
+  const randomIdx = getRandomInt(0, emptyCells.length - 1);
+  // const randomCell = renderCell()
+  // const { i, j } = emptyCells[randomIdx];
+
+  gGame.safe--;
+  renderSafe(emptyCells[randomIdx]);
+}
+
+function getTargetedCells(isMine) {
+  let targetedCells = [];
+  for (let i = 0; i < gBoard.length; i++) {
+    for (let j = 0; j < gBoard[0].length; j++) {
+      const cell = gBoard[i][j];
+      const target = isMine ? cell.isMine : !cell.isMine;
+      if (target && !cell.isShown) targetedCells.push({ i, j });
+    }
+  }
+  return targetedCells;
+}
+
+function renderSafe(cords) {
+  const elSafeMsg = document.querySelector(".safe-msg span");
+  elSafeMsg.innerText = gGame.safe;
+
+  if (cords) {
+    const { i, j } = cords;
+    let elCell = document.querySelector(`.cell-${i}-${j}`);
+    elCell.classList.add("safe");
+    setTimeout(() => {
+      elCell.classList.remove("safe");
+    }, 1300);
+  }
+}
+
+function onManual(elManual) {
+  const elTable = document.querySelector("table");
+  const lvlSize = gLevel.SIZE;
+  const lvlMines = gManualMinesLocations.length;
+  const lvl = gLevel.LEVEL;
+
+  if (elManual.innerText === "Start") {
+    onInit({ s: lvlSize, m: lvlMines, l: lvl }, true, true);
+    gGame.shownCount++;
+    startGame({});
+    gGame.isManual = false;
+
+    elTable.classList.remove("manual");
+    elManual.innerText = "Manual Mode";
+    return;
+  }
+
+  onInit({ s: lvlSize, m: gLevel.MINES, l: lvl });
+  gGame.isManual = true;
+  elTable.classList.add("manual");
+  elManual.innerText = "Start";
+}
+
+function addManualMines() {
+  for (let i = 0; i < gManualMinesLocations.length; i++) {
+    const mineLoc = gManualMinesLocations[i];
+
+    gBoard[mineLoc.i][mineLoc.j].isMine = true;
+  }
 }

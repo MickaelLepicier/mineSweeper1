@@ -8,20 +8,24 @@
   </head>
   <!-- <body onload="onInit()" mouseup="onKey(event)" oncontextmenu="return false;"> -->
   <body onload="onInit()" mouseup="onKey(event)" oncontextmenu="return false">
+    <div class="win-lose"></div>
     <div class="header">
-      <div class="win-lose"></div>
-      <div class="levelBtns">
-        <button class="easy" onclick="onInit({ s: 4, m: 3, l:'easy' })">
-          🙂
-        </button>
-        <button class="normal" onclick="onInit({ s: 8, m: 3, l:'normal' })">
-          🙂
-        </button>
-        <button class="hard" onclick="onInit({ s: 16, m: 3, l:'hard' })">
-          🙂
-        </button>
-      </div>
       <div class="live"></div>
+      <div class="levelBtns">
+        <div
+          class="btn easy"
+          onclick="onInit({ s: 4, m: 4, l:'Easy' },false)"
+        ></div>
+        <div
+          class="btn normal"
+          onclick="onInit({ s: 8, m: 12, l:'Normal' },false)"
+        ></div>
+        <div
+          class="btn hard"
+          onclick="onInit({ s: 16, m: 40, l:'Hard' },false)"
+        ></div>
+      </div>
+
       <div class="timer"></div>
     </div>
 
@@ -30,10 +34,15 @@
     </table>
     <div class="extra">
       <div class="hints" onclick="onHintClicked()"></div>
-      <div class=""></div>
-      <div class=""></div>
+      <div class="safe-container">
+        <button class="safe-btn" onclick="onSafeClick()">Safe Click</button>
+        <div class="safe-msg"><span></span> clicks available</div>
+      </div>
+      <button class="manual-mode" onclick="onManual(this)">Manual Mode</button>
+      <div class="best-score">
+        You'r best score is: <span> ---- 00:00</span>
+      </div>
     </div>
-    <div class="best-score"></div>
 
     <div class="footer">Mickael Lepicier</div>
     <script src="js/main.js"></script>

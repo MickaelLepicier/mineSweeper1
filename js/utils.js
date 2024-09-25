@@ -20,10 +20,14 @@ function countNegMines(board, cellI, cellJ) {
   return countMines;
 }
 
-function renderCell(location, content) {
+function renderCell(location, content, isShown = true) {
   // Select the elCell and set the value
-  var elCell = document.querySelector(`.cell-${location.i}-${location.j}`);
-  elCell.classList.add("shown");
+  let elCell = document.querySelector(`.cell-${location.i}-${location.j}`);
+  if (isShown) {
+    elCell.classList.add("shown");
+  } else {
+    elCell.classList.remove("shown");
+  }
   elCell.innerHTML = content;
 }
 

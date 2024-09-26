@@ -1,5 +1,13 @@
 body{
     background-color: cornflowerblue;
+    width: 70%;
+    margin: 5% auto;
+    border: 2px solid snow;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0px -1px 14px 4px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 0px -1px 14px 4px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px -1px 14px 4px rgba(0,0,0,0.75);
 }
 
 .dark{
@@ -89,6 +97,9 @@ table{
     padding: 1px;
     border-radius: 5px;
     margin: auto;
+    box-shadow: 0px -1px 14px 4px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 0px -1px 14px 4px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px -1px 14px 4px rgba(0,0,0,0.75);
 
 }
 
@@ -149,12 +160,12 @@ img:hover{
     padding: 5px;
     border-radius: 5px;
     background: darkcyan;
+    
 
 }
 
 
 .helpers-container{
-    /* width: 50%; */
     margin: 1% auto;
     text-align: center;
     display: flex;

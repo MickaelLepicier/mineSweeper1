@@ -2,11 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-    <title>Document</title>
+    <title>MineSweeper</title>
     <link rel="stylesheet" href="css/main.css" />
   </head>
-  <!-- <body onload="onInit()" mouseup="onKey(event)" oncontextmenu="return false;"> -->
   <body onload="onInit()" mouseup="onKey(event)" oncontextmenu="return false">
     <div class="win-lose"></div>
     <div class="header">
@@ -16,33 +14,52 @@
           class="btn easy"
           onclick="onInit({ s: 4, m: 4, l:'Easy' },false)"
         ></div>
+        <!-- 4 -->
         <div
           class="btn normal"
           onclick="onInit({ s: 8, m: 12, l:'Normal' },false)"
         ></div>
+        <!-- 12 -->
         <div
           class="btn hard"
           onclick="onInit({ s: 16, m: 40, l:'Hard' },false)"
         ></div>
       </div>
-
+      <!-- 40 -->
       <div class="timer"></div>
     </div>
 
     <table>
       <tbody class="board"></tbody>
     </table>
-    <div class="extra">
-      <div class="hints" onclick="onHintClicked()"></div>
-      <div class="safe-container">
-        <button class="safe-btn" onclick="onSafeClick()">Safe Click</button>
-        <div class="safe-msg"><span></span> clicks available</div>
+    <div class="total-hidden-mines">Hidden Mines: <span></span></div>
+
+    <div class="dark-mode" onclick="darkMode(this)">Dark Mode</div>
+
+    <div class="extra-fetchers-container">
+      <div class="helpers-container">
+        <div class="hints" onclick="onHintClicked()"></div>
+
+        <div class="safe-container">
+          <button class="safe-btn" onclick="onSafeClick()">Safe Click</button>
+          <div class="safe-msg"><span></span> clicks available</div>
+        </div>
       </div>
-      <button class="manual-mode" onclick="onManual(this)">Manual Mode</button>
-      <div class="best-score">
-        You'r best score is: <span> ---- 00:00</span>
+
+      <!-- <div class="mega-helpers-container">
+        <button class="safe-btn" onclick="">Mega Hint</button>
+        <button class="safe-btn" onclick="">Mine Exterminate</button>
+      </div> -->
+
+      <div class="special-fetchers-container">
+        <button class="manual-mode" onclick="onManual(this)">
+          Manual Mode
+        </button>
+        <div class="manual-mode-msg"></div>
+        <button class="undo" onclick="onUndo()">UNDO</button>
       </div>
     </div>
+    <div class="best-score">You'r best score is: <span> ---- 00:00</span></div>
 
     <div class="footer">Mickael Lepicier</div>
     <script src="js/main.js"></script>

@@ -12,7 +12,6 @@ function countNegMines(board, cellI, cellJ) {
       if (j < 0 || j >= board[i].length) continue;
       if (i === cellI && j === cellJ) continue;
 
-      // console.log("board[i][j]: ", board[i][j]);
       if (board[i][j].isMine) countMines++;
     }
   }
@@ -41,4 +40,16 @@ function getRandomInt(min, max) {
   const minCeiled = Math.ceil(min);
   const maxFloored = Math.floor(max);
   return Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled); // The maximum is inclusive and the minimum is inclusive
+}
+
+
+function render(){
+  renderBoard(gBoard);
+  renderLevelBtn();
+  renderLives(gGame.lives);
+  renderTotalHiddenMines();
+  renderHints(gGame.hints);
+  renderTimer();
+  renderBestScore();
+  renderSafe();
 }

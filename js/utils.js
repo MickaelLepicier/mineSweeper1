@@ -2,6 +2,16 @@
 
 // console.log("js utils working");
 
+function getCellContent(cell) {
+  let cellContent = "";
+  if (cell.isMarked) {
+    cellContent = FLAG;
+  } else if (cell.isShown) {
+    cellContent = cell.minesAroundCount === 0 ? "" : cell.minesAroundCount;
+  }
+  return cellContent;
+}
+
 function countNegMines(board, cellI, cellJ) {
   let countMines = 0;
 
@@ -42,8 +52,7 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled); // The maximum is inclusive and the minimum is inclusive
 }
 
-
-function render(){
+function render() {
   renderBoard(gBoard);
   renderLevelBtn();
   renderLives(gGame.lives);

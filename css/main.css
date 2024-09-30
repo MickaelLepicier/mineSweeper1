@@ -6,7 +6,7 @@ body{
 
 .board-game{
     background-color: cornflowerblue;
-    width: 50%;
+    width: 75%;
     margin: 5% auto;
     border: 2px solid snow;
     border-radius: 10px;
@@ -40,7 +40,7 @@ body{
 
 .header{
     display: flex;
-    width: 70%;
+    width: 100%;
     margin: 2% auto;
     align-items: center;
     justify-content: center;
@@ -123,8 +123,8 @@ table{
 }
 
 .cell{
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     background-color: goldenrod;
     border-radius: 5px;
     text-align: center;
@@ -339,4 +339,88 @@ table{
 .footer{
   
 text-align: center;
+}
+
+
+.superman-container{
+    position: absolute;
+    top: 35%;
+    left: 70%;
+    opacity: 0;
+    transition: 0.8s;
+}
+
+
+.superman-speech{
+  width: 150px;
+  border-radius: 15px;
+  background: white;
+  padding: 15px;
+  text-align: center;
+  font-weight: 900;
+  font-family: arial;
+  position: absolute;
+  left: 55%;
+  bottom: 97%;
+}
+
+.sb-s:before{
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 10px solid white;
+    border-right: 10px solid transparent;
+    border-top: 10px solid white;
+    border-bottom: 10px solid transparent;
+    left: 19px;
+    bottom: -19px;
+  }
+  
+
+.superman-exterminator{
+    width: 200px;
+}
+
+
+
+.batman-container{
+    position: absolute;
+    top: 37%;
+    left: 21%;
+    opacity: 0;
+    transition: 0.8s;
+   
+}
+
+.batman-speech{
+    width: 150px;
+    border-radius: 15px;
+    background: white;
+    padding: 15px;
+    text-align: center;
+    font-weight: 900;
+    font-family: arial;
+    position: absolute;
+    left: -95%;
+    bottom: 97%;
+
+}
+
+.sb-b:before{
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 10px solid transparent;
+    border-right: 10px solid white;
+    border-top: 10px solid white;
+    border-bottom: 10px solid transparent;
+    right: 19px;
+    bottom: -19px;
+}
+
+.batman-mega-hint{
+    width: 135px;
+
 }

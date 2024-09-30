@@ -2,9 +2,10 @@
 
 // console.log("js working");
 
-// rest and check if there is something to add
-// maybe put superman on Exterminator
+// put lego buttons on the board
 // maybe put some music?
+// win lose modal ?
+// link : https://www.pngegg.com/en/png-wlthb
 
 // UNDO is not working on mega hint and exterminator, and thats ok :)
 
@@ -28,6 +29,8 @@ const HARD = `<img class="level-img" src="img/head-hard.png" alt="head">`;
 const WINLOSE = `<img class="win-lose-img" src="img/LEGO_logo.png" alt="head">`;
 const WON = `<img class="win-lose-img" src="img/head-won.png" alt="head">`;
 const LOSE = `<img class="win-lose-img" src="img/head-lose.png" alt="head">`;
+
+// const SUPERMAN = `<img class="superman" src="img/superman.png" alt="superman">`;
 
 function onInit(
   level = { s: 4, m: 4, l: "Easy" },
@@ -665,6 +668,7 @@ function onMegaHint(elMegaHint) {
 
   gGame.megaHint.isMegaHint = true;
   elMegaHint.classList.add("btn-off");
+  renderBatman();
 }
 
 function getMegaHintCords(cords) {
@@ -732,6 +736,7 @@ function onExterminator(elExterminator) {
 
   gMinesLocations = [];
   elExterminator.classList.add("btn-off");
+  renderSuperman();
 }
 
 function updateGMinesLocations() {
@@ -764,4 +769,20 @@ function removeMine(cords) {
 
   renderCell(cords, "", false);
   renderTotalHiddenMines();
+}
+
+function renderSuperman() {
+  const elSuperman = document.querySelector(".superman-container");
+  elSuperman.style.opacity = 1;
+  setTimeout(() => {
+    elSuperman.style.opacity = 0;
+  }, 5000);
+}
+
+function renderBatman() {
+  const elBatman = document.querySelector(".batman-container");
+  elBatman.style.opacity = 1;
+  setTimeout(() => {
+    elBatman.style.opacity = 0;
+  }, 5000);
 }

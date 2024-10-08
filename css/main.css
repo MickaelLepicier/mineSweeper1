@@ -1,357 +1,362 @@
-body{
-  
-    background-image: url('../img/base-plate-green.jpg');
-    background-position: center;
-}
+/* TODO organize the code */
+/* How to organize the css code? what should be up and what at the bottom? */
+/* What a name do you suggest instead of "extra-fetchers-container"? */
 
-.board-game{
-    background-color: cornflowerblue;
-    width: 75%;
-    margin: 5% auto;
-    border: 2px solid snow;
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 0px -1px 14px 4px rgba(0,0,0,0.75);
-    -webkit-box-shadow: 0px -1px 14px 4px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px -1px 14px 4px rgba(0,0,0,0.75);
-  
-}
+/* 
 
-.dark{
-    background-image: url('../img/base-plate-grey.jpg');
-
-}
-
-.win-lose{
-    width: 50px;
-    height: 50px;
-    margin: auto;
-    text-align: center;
-    border: 2px solid goldenrod;
-    border-radius: 10px;
-    padding: 5px;
-    font-size: xx-large;
-
-}
-
-.win-lose-img{
-    width: 50px;
-}
-
-.header{
-    display: flex;
-    width: 100%;
-    margin: 2% auto;
-    align-items: center;
-    justify-content: center;
+* { 
+ box-sizing: border-box 
+ } 
  
+ */
+
+body {
+  background-image: url('../img/base-plate-green.jpg');
+  background-position: center;
 }
 
-.live{
-    width: 150px;
-    height: 45px;
-    border: 2px solid darkseagreen;
-    border-radius: 10px;
-    padding: 3px;
-
+.how-to-play-modal {
 }
 
-.live-img{
-width: 50px;
-margin-top: 7px;
+.board-game {
+  width: 75%;
+  margin: 5% auto;
+  padding: 10px;
+  background-color: cornflowerblue;
+  border: 2px solid snow;
+  border-radius: 10px;
+  box-shadow: 0px -1px 14px 4px rgba(0, 0, 0, 0.75);
 }
 
-.levelBtns{
-    border: 2px solid gold;
-    border-radius: 10px;
-    display: flex;
-    margin: 0px 10px;
-    font-size: x-large;
-    padding:3px
+.dark-mode {
+  background-image: url('../img/base-plate-grey.jpg');
 }
 
-.level-img{
-width: 50px;
+/* Header Styles */
+
+.header {
+  display: flex;
+  width: 100%;
+  margin: 2% auto;
+  align-items: center;
+  justify-content: center;
 }
 
-.btn{
-    padding: 5px;
-    cursor: pointer;
-    border-radius: 10px;
-    transition: 0.3s;
-    
+/* Game Elements */
+
+.win-lose {
+  width: 50px;
+  height: 50px;
+  margin: auto;
+  text-align: center;
+  border: 2px solid goldenrod;
+  border-radius: 10px;
+  padding: 5px;
 }
 
-.btn:hover{
-    background-color:rgba(255, 217, 0, 0.684)
+.win-lose-img {
+  width: 50px;
 }
 
-.total-hidden-mines{
-    width: 150px;
-    margin: 5px auto;
-    border: 2px solid darkred;
-    border-radius: 10px;
-    padding: 3px;
-    text-align: center;
-    font-size: large;
-    background-color: cadetblue;
+.live {
+  width: 150px;
+  height: 45px;
+  border: 2px solid darkseagreen;
+  border-radius: 10px;
+  padding: 3px;
 }
 
-.total-hidden-mines span{
-color: gold;
+.live-img {
+  width: 50px;
+  margin-top: 7px;
+  /* TODO instead of margin-top, so line-height: 7px; */
 }
 
-.timer{
-    width: 150px;
-    height: 40px;
-    border: 2px solid black;
-    border-radius: 10px;
-    padding: 3px;
-    text-align: center;
-    font-size: xx-large;
+.level-btns {
+  display: flex;
+  border: 2px solid gold;
+  border-radius: 10px;
+  margin: 0px 10px;
+  padding: 3px;
 }
 
-table{
-    background-color: black;
-    padding: 1px;
-    border-radius: 5px;
-    margin: auto;
-    box-shadow: 0px -1px 14px 4px rgba(0,0,0,0.75);
-    -webkit-box-shadow: 0px -1px 14px 4px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px -1px 14px 4px rgba(0,0,0,0.75);
-
+.level-img {
+  width: 50px;
 }
 
-.cell{
-    width: 30px;
-    height: 30px;
-    background-color: goldenrod;
-    border-radius: 5px;
-    text-align: center;
-    transition: 0.3s;
-    cursor: pointer;
-    
+.btn {
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: 0.3s;
 }
 
-.cell:hover{
-    background-color: gold;
+.btn:hover {
+  background-color: rgba(255, 217, 0, 0.684);
 }
 
-.shown{
-    background-color: brown;
+.timer {
+  width: 150px;
+  height: 40px;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 3px;
+  text-align: center;
+  font-size: 2em;
 }
 
-.shown:hover{
-    background-color: brown;
+/* Game Board */
+
+table {
+  background-color: black;
+  padding: 1px;
+  border-radius: 5px;
+  margin: auto;
+  box-shadow: 0px -1px 14px 4px rgba(0, 0, 0, 0.75);
 }
 
-
-.hint-img{
-    border-radius: 10px;
-    margin: 1px;
-    transition: 0.3s;
+.cell {
+  width: 30px;
+  height: 30px;
+  background-color: goldenrod;
+  border-radius: 5px;
+  text-align: center;
+  transition: 0.3s;
+  cursor: pointer;
 }
 
-.hint-img:hover{
-  background-color: rgb(248, 225, 100);  
- 
+.cell:hover {
+  background-color: gold;
 }
 
-.dark-mode{
-    width: 10%;
-    height: 25px;
-    margin: 1% auto;
-    border-radius: 10px;
-    background-color: cornsilk;
-    text-align: center;
-    font-size: large;
-    cursor: pointer;
-    background: rgb(9,254,0);
-    background: linear-gradient(13deg, rgba(9,254,0,1) 40%, rgba(139,161,173,1) 65%);
-   
-    border-top: 1px solid grey;
-    border-left: 1px solid grey;
-    border-bottom: 1px solid black;
-    border-right: 1px solid black;
+.shown {
+  background-color: brown;
 }
 
-.dark-mode:active{
-    border-top: 1px solid black;
-    border-left: 1px solid black;
-    border-bottom: 1px solid grey;
-    border-right: 1px solid grey;
+.shown:hover {
+  background-color: brown;
 }
 
-.extra-fetchers-container{
-    width: 350px;
-    height: 185px;
-    margin: 5% auto 0%;
-    text-align: center;
-    border: 1px solid black;
-    padding: 5px;
-    border-radius: 5px;
-    background: darkcyan;
-    
+/* Helpers and Special Fetchers */
 
+.total-hidden-mines {
+  width: 150px;
+  margin: 5px auto;
+  padding: 3px;
+  border: 2px solid darkred;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 1.15em;
+  background-color: cadetblue;
 }
 
-
-.helpers-container{
-    margin: 1% auto;
-    display: flex;
-    justify-content: center;
-    
-}
-.hints{
-    width: 150px;
-    height: 45px;
-    text-align: center;
-    border: 2px solid black;
-    border-radius: 10px;
-    padding: 1px;
-    background-color: burlywood;
-    margin-left: -15px;
-
-}
-.hint{
-    cursor: url(../img/hint.png), pointer;
+.total-hidden-mines span {
+  color: gold;
 }
 
-.safe{
-    background-color: antiquewhite;
+.dark-mode-btn {
+  width: 10%;
+  height: 25px;
+  margin: 1% auto;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 1.13em;
+  cursor: pointer;
+  background: linear-gradient(
+    13deg,
+    rgba(9, 254, 0, 1) 40%,
+    rgba(139, 161, 173, 1) 65%
+  );
+
+  border-top: 1px solid grey;
+  border-left: 1px solid grey;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
 }
 
-.safe-container{
-    margin-left: 15px;
-   
+.dark-mode-btn:active {
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  border-bottom: 1px solid grey;
+  border-right: 1px solid grey;
 }
 
-.safe-btn{
-    width: 130px;
-    padding: 10px;
-    margin: 1%;
-    background-color: bisque;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
+.game-tools-container {
+  width: 350px;
+  height: 185px;
+  margin: 5% auto 0%;
+  text-align: center;
+  border: 1px solid black;
+  padding: 15px;
+  border-radius: 5px;
+  background: darkcyan;
 }
 
-.safe-btn:hover{
-    background-color: greenyellow;
+.assist-tools-container {
+  display: flex;
+  margin: 1% auto;
+  justify-content: center;
 }
 
-.special-fetchers-container{
-    margin: 5% auto 0%;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-  
-
+.hints {
+  width: 150px;
+  height: 45px;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin-left: -15px;
+  padding: 1px;
+  text-align: center;
+  cursor: pointer;
+  background-color: burlywood;
 }
 
-.manual-mode-btn{
-    width: 150px;
-    height: 45px;
-    margin-right: 5px;
-    background-color:cadetblue;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
+.hint {
+  cursor: url(../img/hint.png), pointer;
 }
 
-.manual-mode-btn:hover{
-    background-color: #98c5c6;
-}
-.manual-mode-msg{
-    font-size: medium;
-}
-
-.undo{
-    width: 150px;
-    height: 45px;
-    margin-left: 5px;
-    background-color: coral;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
-
+.hint-img {
+  border-radius: 10px;
+  margin: 1px;
+  transition: 0.3s;
 }
 
-.undo:hover{
-    background-color: #ef9878;
+.hint-img:hover {
+  background-color: rgb(248, 225, 100);
 }
 
-.best-score{
-    width: 25%;
-    margin: 1% auto;
-    padding: 10px;
-    background-color: #60bc9d;
-    border-radius: 10px;
-    text-align: center;
+.safe {
+  background-color: antiquewhite;
 }
 
-.manual{
-    background-color: green;
+.safe-container {
+  margin-left: 15px;
 }
 
-
-.mega-hint{
-    width: 150px;
-    height: 45px;
-    margin: 1%;
-    background-color: deepskyblue;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
+.safe-btn {
+  width: 130px;
+  border-radius: 5px;
+  margin: 1%;
+  padding: 10px;
+  cursor: pointer;
+  background-color: bisque;
+  transition: 0.3s;
 }
 
-.mega-hint:hover{
-    background-color: rgb(96, 211, 250);
-
-}
-.megaHintColor{
-    background-color: deepskyblue;
+.safe-btn:hover {
+  background-color: greenyellow;
 }
 
-
-.exterminator{
-    width: 150px;
-    height: 45px;
-    margin: 1%;
-    background-color: darkred;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
+.advanced-tools-container {
+  display: flex;
+  margin: 5% auto 0%;
+  text-align: center;
+  justify-content: center;
 }
 
-.exterminator:hover{
-    background-color: rgb(188, 15, 15);
+.manual-mode-btn {
+  width: 150px;
+  height: 45px;
+  margin-right: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: cadetblue;
+  transition: 0.3s;
 }
 
-.btn-off{
-    background-color: grey;
+.manual-mode-btn:hover {
+  background-color: #98c5c6;
 }
 
-.btn-off:hover{
-    background-color: grey;
+.manual-mode-msg {
+  /* font-size: 1em; */
 }
 
-.footer{
-  
-text-align: center;
+.undo {
+  width: 150px;
+  height: 45px;
+  margin-left: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: coral;
+  transition: 0.3s;
 }
 
-
-.superman-container{
-    position: absolute;
-    top: 35%;
-    left: 70%;
-    opacity: 0;
-    transition: 0.8s;
+.undo:hover {
+  background-color: #ef9878;
 }
 
+.best-score {
+  width: 25%;
+  margin: 1% auto;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  background-color: #60bc9d;
+}
 
-.superman-speech{
+.manual {
+  background-color: green;
+}
+
+.mega-hint {
+  width: 150px;
+  height: 45px;
+  margin: 1%;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: deepskyblue;
+  transition: 0.3s;
+}
+
+.mega-hint:hover {
+  background-color: rgb(96, 211, 250);
+}
+.megaHintColor {
+  background-color: deepskyblue;
+}
+
+.exterminator {
+  width: 150px;
+  height: 45px;
+  margin: 1%;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: darkred;
+  transition: 0.3s;
+}
+
+.exterminator:hover {
+  background-color: rgb(188, 15, 15);
+}
+
+.btn-off {
+  background-color: grey;
+}
+
+.btn-off:hover {
+  background-color: grey;
+}
+
+.footer {
+  text-align: center;
+}
+
+/* Characters and Speech Bubbles */
+
+.superman-container,
+.batman-container {
+  position: absolute;
+  opacity: 0;
+  transition: 0.8s;
+}
+
+.superman-container {
+  top: 35%;
+  left: 70%;
+}
+
+.superman-speech,
+.batman-speech {
   width: 150px;
   border-radius: 15px;
   background: white;
@@ -360,67 +365,53 @@ text-align: center;
   font-weight: 900;
   font-family: arial;
   position: absolute;
+}
+
+.superman-speech {
   left: 55%;
   bottom: 97%;
 }
 
-.sb-s:before{
-    content: "";
-    width: 0px;
-    height: 0px;
-    position: absolute;
-    border-left: 10px solid white;
-    border-right: 10px solid transparent;
-    border-top: 10px solid white;
-    border-bottom: 10px solid transparent;
-    left: 19px;
-    bottom: -19px;
-  }
-  
-
-.superman-exterminator{
-    width: 200px;
+.sb-s:before {
+  content: '';
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 10px solid white;
+  border-right: 10px solid transparent;
+  border-top: 10px solid white;
+  border-bottom: 10px solid transparent;
+  left: 19px;
+  bottom: -19px;
 }
 
-
-
-.batman-container{
-    position: absolute;
-    top: 37%;
-    left: 21%;
-    opacity: 0;
-    transition: 0.8s;
-   
+.superman-exterminator {
+  width: 200px;
 }
 
-.batman-speech{
-    width: 150px;
-    border-radius: 15px;
-    background: white;
-    padding: 15px;
-    text-align: center;
-    font-weight: 900;
-    font-family: arial;
-    position: absolute;
-    left: -95%;
-    bottom: 97%;
-
+.batman-container {
+  top: 37%;
+  left: 21%;
 }
 
-.sb-b:before{
-    content: "";
-    width: 0px;
-    height: 0px;
-    position: absolute;
-    border-left: 10px solid transparent;
-    border-right: 10px solid white;
-    border-top: 10px solid white;
-    border-bottom: 10px solid transparent;
-    right: 19px;
-    bottom: -19px;
+.batman-speech {
+  left: -95%;
+  bottom: 97%;
 }
 
-.batman-mega-hint{
-    width: 135px;
+.sb-b:before {
+  content: '';
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 10px solid transparent;
+  border-right: 10px solid white;
+  border-top: 10px solid white;
+  border-bottom: 10px solid transparent;
+  right: 19px;
+  bottom: -19px;
+}
 
+.batman-mega-hint {
+  width: 135px;
 }

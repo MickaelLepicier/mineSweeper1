@@ -130,10 +130,9 @@ TODO - watch Yaron speaking about my project
 */
 
 // TODO-2 later on I can do this as well:
-// "How to play" modal
-// Maybe put some music
 // Win lose modal ?
-// Put lego buttons on the board
+// Maybe put some music
+// Maybe put lego buttons on the board
 
 // link : https://www.pngegg.com/en/png-wlthb
 
@@ -156,9 +155,9 @@ const EASY = `<img class="level-img" src="img/head-easy.png" alt="head">`
 const NORMAL = `<img class="level-img" src="img/head-normal.png" alt="head">`
 const HARD = `<img class="level-img" src="img/head-hard.png" alt="head">`
 
-const WINLOSE = `<img class="win-lose-img" src="img/LEGO-logo.png" alt="lego-logo">`
-const WON = `<img class="win-lose-img" src="img/head-won.png" alt="head">`
-const LOSE = `<img class="win-lose-img" src="img/head-lose.png" alt="head">`
+const WINLOSE = `<img class="win-lose-small-img" src="img/LEGO-logo.png" alt="lego-logo">`
+const WON = `<img class="win-lose-small-img" src="img/head-won.png" alt="head">`
+const LOSE = `<img class="win-lose-small-img" src="img/head-lose.png" alt="head">`
 
 function onInit(gameLevel, clearStorage = true, onManual = false) {
   gGame = {
@@ -401,6 +400,8 @@ function addMines(cellClickedCords, isManual = false) {
     gBoard[randomCords.i][randomCords.j].isMine = true
   }
 }
+// TODO create update win-lose-modal or make the win lose of 2 superman and batman imgs
+// think about it
 
 function checkGameOver() {
   const isAllCellsShown = gGame.shownCount === gLevel.SIZE ** 2 - gLevel.MINES
@@ -505,4 +506,20 @@ function updateTimer() {
 function renderTimer(minutes = '00', seconds = '00') {
   const elTimer = document.querySelector('.timer')
   elTimer.innerText = `${minutes}:${seconds}`
+}
+
+// ~~~~~~~~ MODALS ~~~~~~~~
+
+function openModal(className) {
+  const elModal = document.querySelector(`${className}`)
+  elModal.style.display = 'block'
+}
+
+function closeModal(className) {
+  const elModal = document.querySelector(`${className}`)
+  elModal.style.display = 'none'
+}
+
+function onKey(ev) {
+  if (ev.key === 'Escape') closeModal('.how-to-play-modal')
 }

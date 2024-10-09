@@ -10,21 +10,22 @@
  
  */
 
+* {
+  transition: 0.3s;
+}
+
 body {
   background-image: url('../img/base-plate-green.jpg');
   background-position: center;
-}
-
-.how-to-play-modal {
 }
 
 .board-game {
   width: 75%;
   margin: 5% auto;
   padding: 10px;
-  background-color: cornflowerblue;
   border: 2px solid snow;
   border-radius: 10px;
+  background-color: cornflowerblue;
   box-shadow: 0px -1px 14px 4px rgba(0, 0, 0, 0.75);
 }
 
@@ -54,7 +55,7 @@ body {
   padding: 5px;
 }
 
-.win-lose-img {
+.win-lose-small-img {
   width: 50px;
 }
 
@@ -88,7 +89,6 @@ body {
   padding: 5px;
   cursor: pointer;
   border-radius: 10px;
-  transition: 0.3s;
 }
 
 .btn:hover {
@@ -108,21 +108,20 @@ body {
 /* Game Board */
 
 table {
-  background-color: black;
   padding: 1px;
   border-radius: 5px;
   margin: auto;
+  background-color: black;
   box-shadow: 0px -1px 14px 4px rgba(0, 0, 0, 0.75);
 }
 
 .cell {
   width: 30px;
   height: 30px;
-  background-color: goldenrod;
   border-radius: 5px;
   text-align: center;
-  transition: 0.3s;
   cursor: pointer;
+  background-color: goldenrod;
 }
 
 .cell:hover {
@@ -157,7 +156,7 @@ table {
 .dark-mode-btn {
   width: 10%;
   height: 25px;
-  margin: 1% auto;
+  margin: auto;
   border-radius: 10px;
   text-align: center;
   font-size: 1.13em;
@@ -184,7 +183,7 @@ table {
 .game-tools-container {
   width: 350px;
   height: 185px;
-  margin: 5% auto 0%;
+  margin: auto;
   text-align: center;
   border: 1px solid black;
   padding: 15px;
@@ -217,7 +216,6 @@ table {
 .hint-img {
   border-radius: 10px;
   margin: 1px;
-  transition: 0.3s;
 }
 
 .hint-img:hover {
@@ -239,7 +237,6 @@ table {
   padding: 10px;
   cursor: pointer;
   background-color: bisque;
-  transition: 0.3s;
 }
 
 .safe-btn:hover {
@@ -260,7 +257,6 @@ table {
   border-radius: 5px;
   cursor: pointer;
   background-color: cadetblue;
-  transition: 0.3s;
 }
 
 .manual-mode-btn:hover {
@@ -278,7 +274,6 @@ table {
   border-radius: 5px;
   cursor: pointer;
   background-color: coral;
-  transition: 0.3s;
 }
 
 .undo:hover {
@@ -305,7 +300,6 @@ table {
   border-radius: 5px;
   cursor: pointer;
   background-color: deepskyblue;
-  transition: 0.3s;
 }
 
 .mega-hint:hover {
@@ -322,7 +316,6 @@ table {
   border-radius: 5px;
   cursor: pointer;
   background-color: darkred;
-  transition: 0.3s;
 }
 
 .exterminator:hover {
@@ -414,4 +407,76 @@ table {
 
 .batman-mega-hint {
   width: 135px;
+}
+
+/* How To Play */
+
+.how-to-play-btn {
+  width: 150px;
+  margin: 5% auto 0.5%;
+  padding: 3px;
+  border: 2px solid darkred;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 1.15em;
+  cursor: pointer;
+  background-color: darkcyan;
+
+  border-top: 1px solid grey;
+  border-left: 1px solid grey;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+}
+
+.how-to-play-btn:hover {
+  color: white;
+  background-color: #3bbaba;
+}
+
+.how-to-play-btn:active {
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  border-bottom: 1px solid grey;
+  border-right: 1px solid grey;
+}
+
+.how-to-play-modal {
+  width: 70%;
+  margin: 0;
+  padding: 1.5%;
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid snow;
+  border-radius: 10px;
+  background-color: darkcyan;
+  box-shadow: 0px -1px 14px 4px rgba(0, 0, 0, 0.75);
+}
+
+.how-to-play-modal button {
+  margin-inline-start: 97%;
+  cursor: pointer;
+  background-color: #98c5c6;
+}
+
+.how-to-play-modal h1,
+h2 {
+  margin-block-start: 0px;
+  text-align: center;
+}
+
+.how-to-play-modal h1 {
+  color: gold;
+}
+
+.how-to-play-modal h3,
+ul,
+li {
+  margin-inline-start: 10%;
+}
+
+.how-to-play-modal li span {
+  font-weight: bold;
 }

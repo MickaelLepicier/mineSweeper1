@@ -6,78 +6,97 @@
     <link rel="icon" type="image/png" href="img/LEGO_logo.png" />
     <link rel="stylesheet" href="css/main.css" />
   </head>
-  <body onload="onInit()" mouseup="onKey(event)" onkeyup="onKey()">
-    <div class="how-to-play-modal">
-      <h1>Welcome to LEGO MineSweeper</h1>
-      <h3>Objective:</h3>
-      <ul>
-        The goal is to clear all the squares on the field that do not contain
-        mines.
-      </ul>
-
-      <h3>How to Play:</h3>
-      <ul>
-        <li>
-          <span>Left-click</span> on a square to reveal what's underneath.
-        </li>
-        <li>- If it's a mine you loose 1 live.</li>
-        <li>
-          - If it's a number, that number indicates how many mines are around
-          that square.
-        </li>
-      </ul>
-
-      <!-- TODO - keep filling the HTML and then go to the CSS 
-      https://chatgpt.com/c/67052cb4-3b6c-8010-b2d5-2e3131e328c3 -->
-
-      <button onclick="closeModal()">X</button>
-    </div>
+  <body onload="onInit()" mouseup="onKey(event)" onkeyup="onKey(event)">
     <div class="board-game">
       <div class="win-lose"></div>
       <div class="header">
-        <div class="live"></div>
+        <div class="live" title="lives"></div>
         <div class="level-btns">
-          <div class="btn easy" onclick="onInit('easy',false)"></div>
-          <div class="btn normal" onclick="onInit('normal',false)"></div>
-          <div class="btn hard" onclick="onInit('hard',false)"></div>
+          <div
+            class="btn easy"
+            title="Easy"
+            onclick="onInit('easy',false)"
+          ></div>
+          <div
+            class="btn normal"
+            title="Normal"
+            onclick="onInit('normal',false)"
+          ></div>
+          <div
+            class="btn hard"
+            title="Hard"
+            onclick="onInit('hard',false)"
+          ></div>
         </div>
-        <div class="timer"></div>
+        <div class="timer" title="timer"></div>
       </div>
 
       <table oncontextmenu="return false">
         <tbody class="board"></tbody>
       </table>
-      <div class="total-hidden-mines">Hidden Mines: <span></span></div>
+      <div
+        class="total-hidden-mines"
+        title="Total hidden mines that are on the field"
+      >
+        Hidden Mines: <span></span>
+      </div>
 
       <div class="dark-mode-btn" onclick="onDarkMode(this)">Dark Mode</div>
+      <div class="how-to-play-btn" onclick="openModal('.how-to-play-modal')">
+        How to play?
+      </div>
 
       <div class="game-tools-container">
         <div class="assist-tools-container">
-          <div class="hints" onclick="onHintClicked()"></div>
+          <div
+            class="hints"
+            title="Click on a cell and its neighbors are revealed for a second"
+            onclick="onHintClicked()"
+          ></div>
 
           <div class="safe-container">
-            <button class="safe-btn" onclick="onSafeClick()">Safe Click</button>
+            <button
+              class="safe-btn"
+              title="Marked random cell that is without a mine"
+              onclick="onSafeClick()"
+            >
+              Safe Click
+            </button>
             <div class="safe-msg"><span></span> clicks available</div>
           </div>
         </div>
 
         <div class="special-tools-container">
-          <button class="mega-hint" onclick="onMegaHint(this)">
+          <button
+            class="mega-hint"
+            title="Reveal an area of the board by clicking 2 cells"
+            onclick="onMegaHint(this)"
+          >
             Mega Hint
           </button>
-          <button class="exterminator" onclick="onExterminator(this)">
+          <button
+            class="exterminator"
+            title="Remove 3 random mines from the field"
+            onclick="onExterminator(this)"
+          >
             Exterminator
           </button>
         </div>
 
         <div class="advanced-tools-container">
           <div class="manual-mode-container">
-            <button class="manual-mode-btn" onclick="onManual(this)">
+            <button
+              class="manual-mode-btn"
+              title="You choose where the mines will be by clicking the cells"
+              onclick="onManual(this)"
+            >
               Manual Mode
             </button>
             <div class="manual-mode-msg"></div>
           </div>
-          <button class="undo" onclick="onUndo()">UNDO</button>
+          <button class="undo" title="Undo the last step" onclick="onUndo()">
+            UNDO
+          </button>
         </div>
       </div>
       <div class="best-score">
@@ -101,6 +120,63 @@
       </div>
       <img class="batman-mega-hint" src="img/batman.png" alt="batman" />
     </div>
+
+    <div class="how-to-play-modal">
+      <button onclick="closeModal('.how-to-play-modal')">X</button>
+      <h1>Welcome to LEGO MineSweeper</h1>
+      <h2>Start the game by clicking a cell on the board</h2>
+
+      <h3>Objective:</h3>
+      <ul>
+        The goal is to clear all the cells on the field that do not contain
+        mines.
+      </ul>
+
+      <h3>How to Play:</h3>
+      <ul>
+        We play with the mouse.
+      </ul>
+      <ul>
+        <li><span>Left-click</span> on a cell to reveal what's underneath.</li>
+        <ul>
+          <li>If it's a mine you lose 1 life.</li>
+          <li>
+            If it's a number, that number indicates how many mines are around
+            that cell.
+          </li>
+        </ul>
+        <li>
+          <span>Right-click</span> on a cell to place a flag where you think a
+          mine is hidden.
+        </li>
+        <li>
+          Use the numbers as clues to deduce where the mines are located and
+          flag them.
+        </li>
+      </ul>
+
+      <h3>Winning the Game:</h3>
+      <ul>
+        When all the cells without mines have been revealed and all the mines
+        have been flagged, except the triggered mines.
+      </ul>
+
+      <h3>Losing the Game:</h3>
+      <ul>
+        If you click on a cell with a mine and you don't have 0 lives.
+      </ul>
+
+      <h2>
+        Exit this window by clicking the X on the up-right corner or press ESC
+      </h2>
+    </div>
+
+    <div class="win-lose-modal">
+      <button onclick="closeModal('.win-lose-modal')">X</button>
+      <h1 class="win-lose-msg"></h1>
+      <img class="win-lose-img" src="" alt="win-lose-img" />
+    </div>
+
     <script src="js/game.js"></script>
     <script src="js/game-tools.js"></script>
     <script src="js/utils.js"></script>

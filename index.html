@@ -8,7 +8,9 @@
   </head>
   <body onload="onInit()" mouseup="onKey(event)" onkeyup="onKey(event)">
     <div class="board-game">
-      <div class="win-lose"></div>
+      <div class="win-lose-logo"></div>
+      <div class="win-lose-msg">You Won!</div>
+
       <div class="header">
         <div class="live" title="lives"></div>
         <div class="level-btns">
@@ -42,9 +44,7 @@
       </div>
 
       <div class="dark-mode-btn" onclick="onDarkMode(this)">Dark Mode</div>
-      <div class="how-to-play-btn" onclick="openModal('.how-to-play-modal')">
-        How to play?
-      </div>
+      <div class="how-to-play-btn" onclick="openModal()">How to play?</div>
 
       <div class="game-tools-container">
         <div class="assist-tools-container">
@@ -105,8 +105,12 @@
       <div class="footer">Mickael Lepicier</div>
     </div>
 
-    <div class="superman-container">
-      <div class="superman-speech sb-s">I removed 3 mines for you!</div>
+    <!-- Effects and "How to play" modal -->
+
+    <div class="exterminator-effect-container">
+      <div class="superman-exterminator-speech sb-left">
+        I removed 3 mines for you!
+      </div>
       <img
         class="superman-exterminator"
         src="img/superman.png"
@@ -114,15 +118,38 @@
       />
     </div>
 
-    <div class="batman-container">
-      <div class="batman-speech sb-b">
+    <div class="mega-hint-effect-container">
+      <div class="batman-mega-hint-speech sb-right">
         Press on 2 cells and the whole area will be revealed for 2 seconds
       </div>
       <img class="batman-mega-hint" src="img/batman.png" alt="batman" />
     </div>
 
+    <div class="win-lose-effect-container">
+      <div class="up-right-corner-img">
+        <div class="up-right-corner-speech sb-left">BLA BLA BLA</div>
+        <img
+          class="up-right-corner-img"
+          src="img/batman.png"
+          alt="win-lose-img"
+        />
+      </div>
+
+      <img class="up-left-corner-img" src="img/batman.png" alt="win-lose-img" />
+      <img
+        class="bottom-right-corner-img"
+        src="img/batman.png"
+        alt="win-lose-img"
+      />
+      <img
+        class="bottom-left-corner-img"
+        src="img/batman.png"
+        alt="win-lose-img"
+      />
+    </div>
+
     <div class="how-to-play-modal">
-      <button onclick="closeModal('.how-to-play-modal')">X</button>
+      <button onclick="closeModal()">X</button>
       <h1>Welcome to LEGO MineSweeper</h1>
       <h2>Start the game by clicking a cell on the board</h2>
 
@@ -171,11 +198,11 @@
       </h2>
     </div>
 
-    <div class="win-lose-modal">
+    <!-- <div class="win-lose-modal">
       <button onclick="closeModal('.win-lose-modal')">X</button>
       <h1 class="win-lose-msg"></h1>
       <img class="win-lose-img" src="" alt="win-lose-img" />
-    </div>
+    </div> -->
 
     <script src="js/game.js"></script>
     <script src="js/game-tools.js"></script>

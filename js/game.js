@@ -155,9 +155,9 @@ const EASY = `<img class="level-img" src="img/head-easy.png" alt="head">`
 const NORMAL = `<img class="level-img" src="img/head-normal.png" alt="head">`
 const HARD = `<img class="level-img" src="img/head-hard.png" alt="head">`
 
-const WINLOSE = `<img class="win-lose-small-img" src="img/LEGO-logo.png" alt="lego-logo">`
-const WON = `<img class="win-lose-small-img" src="img/head-won.png" alt="head">`
-const LOSE = `<img class="win-lose-small-img" src="img/head-lose.png" alt="head">`
+const WINLOSE = `<img class="win-lose-logo-img" src="img/LEGO-logo.png" alt="lego-logo">`
+const WON = `<img class="win-lose-logo-img" src="img/head-won.png" alt="head">`
+const LOSE = `<img class="win-lose-logo-img" src="img/head-lose.png" alt="head">`
 
 function onInit(gameLevel, clearStorage = true, onManual = false) {
   gGame = {
@@ -191,7 +191,7 @@ function onInit(gameLevel, clearStorage = true, onManual = false) {
   gBoard = buildBoard(gLevel.SIZE)
   render()
 
-  document.querySelector('.win-lose').innerHTML = WINLOSE
+  document.querySelector('.win-lose-logo').innerHTML = WINLOSE
   document.querySelector('.mega-hint').classList.remove('btn-off')
   document.querySelector('.exterminator').classList.remove('btn-off')
 }
@@ -410,14 +410,14 @@ function checkGameOver() {
 
   // LOSE condition
   if (!gGame.lives) {
-    document.querySelector('.win-lose').innerHTML = LOSE
+    document.querySelector('.win-lose-logo').innerHTML = LOSE
     gGame.isOn = false
     revealMines()
     stopTimer()
 
     // WON condition
   } else if (gGame.lives && isAllCellsShown && isAllMinesMarked) {
-    document.querySelector('.win-lose').innerHTML = WON
+    document.querySelector('.win-lose-logo').innerHTML = WON
     bestScore()
     gGame.isOn = false
     stopTimer()
@@ -510,13 +510,13 @@ function renderTimer(minutes = '00', seconds = '00') {
 
 // ~~~~~~~~ MODALS ~~~~~~~~
 
-function openModal(className) {
-  const elModal = document.querySelector(`${className}`)
+function openModal() {
+  const elModal = document.querySelector('.how-to-play-modal')
   elModal.style.display = 'block'
 }
 
-function closeModal(className) {
-  const elModal = document.querySelector(`${className}`)
+function closeModal() {
+  const elModal = document.querySelector('.how-to-play-modal')
   elModal.style.display = 'none'
 }
 

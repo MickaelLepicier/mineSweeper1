@@ -312,7 +312,7 @@ function removeMine(cords) {
 }
 
 function renderSuperman() {
-  const elSuperman = document.querySelector('.superman-container')
+  const elSuperman = document.querySelector('.exterminator-effect-container')
   elSuperman.style.opacity = 1
   setTimeout(() => {
     elSuperman.style.opacity = 0
@@ -320,7 +320,7 @@ function renderSuperman() {
 }
 
 function renderBatman() {
-  const elBatman = document.querySelector('.batman-container')
+  const elBatman = document.querySelector('.mega-hint-effect-container')
   elBatman.style.opacity = 1
   setTimeout(() => {
     elBatman.style.opacity = 0

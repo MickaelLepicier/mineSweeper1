@@ -38,14 +38,14 @@ body {
 .header {
   display: flex;
   width: 100%;
-  margin: 2% auto;
+  margin: 0% auto 2%;
   align-items: center;
   justify-content: center;
 }
 
 /* Game Elements */
 
-.win-lose {
+.win-lose-logo {
   width: 50px;
   height: 50px;
   margin: auto;
@@ -55,8 +55,26 @@ body {
   padding: 5px;
 }
 
-.win-lose-small-img {
+.win-lose-logo-img {
   width: 50px;
+}
+
+.win-lose-msg {
+  width: 200px;
+  height: 60px;
+  margin: 1% auto;
+  /* border: solid 2px black; */
+  font-size: 3em;
+  text-align: center;
+  /* color: red; */
+}
+
+.win {
+  /* color: aqua; */
+}
+
+.lose {
+  /* color: red; */
 }
 
 .live {
@@ -334,22 +352,22 @@ table {
   text-align: center;
 }
 
-/* Characters and Speech Bubbles */
+/* Characters and Speech Bubbles Effects */
 
-.superman-container,
-.batman-container {
+.exterminator-effect-container,
+.mega-hint-effect-container {
   position: absolute;
   opacity: 0;
   transition: 0.8s;
 }
 
-.superman-container {
+.exterminator-effect-container {
   top: 35%;
   left: 70%;
 }
 
-.superman-speech,
-.batman-speech {
+.superman-exterminator-speech,
+.batman-mega-hint-speech {
   width: 150px;
   border-radius: 15px;
   background: white;
@@ -360,12 +378,12 @@ table {
   position: absolute;
 }
 
-.superman-speech {
+.superman-exterminator-speech {
   left: 55%;
   bottom: 97%;
 }
 
-.sb-s:before {
+.sb-left:before {
   content: '';
   width: 0px;
   height: 0px;
@@ -382,17 +400,17 @@ table {
   width: 200px;
 }
 
-.batman-container {
+.mega-hint-effect-container {
   top: 37%;
   left: 21%;
 }
 
-.batman-speech {
+.batman-mega-hint-speech {
   left: -95%;
   bottom: 97%;
 }
 
-.sb-b:before {
+.sb-right:before {
   content: '';
   width: 0px;
   height: 0px;
@@ -406,6 +424,25 @@ table {
 }
 
 .batman-mega-hint {
+  width: 135px;
+}
+
+.up-right-corner-img {
+  width: 135px;
+  position: absolute;
+  left: 75%;
+  bottom: 65%;
+}
+
+.up-left-corner-img {
+  width: 135px;
+}
+
+.bottom-right-corner-img {
+  width: 135px;
+}
+
+.bottom-left-corner-img {
   width: 135px;
 }
 

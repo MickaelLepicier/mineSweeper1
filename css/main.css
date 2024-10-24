@@ -1,15 +1,3 @@
-/* TODO organize the code */
-/* How to organize the css code? what should be up and what at the bottom? */
-/* What a name do you suggest instead of "extra-fetchers-container"? */
-
-/* 
-
-* { 
- box-sizing: border-box 
- } 
- 
- */
-
 * {
   transition: 0.3s;
 }
@@ -60,21 +48,11 @@ body {
 }
 
 .win-lose-msg {
-  width: 200px;
+  width: 30vw;
   height: 60px;
   margin: 1% auto;
-  /* border: solid 2px black; */
   font-size: 3em;
   text-align: center;
-  /* color: red; */
-}
-
-.win {
-  /* color: aqua; */
-}
-
-.lose {
-  /* color: red; */
 }
 
 .live {
@@ -88,7 +66,6 @@ body {
 .live-img {
   width: 50px;
   margin-top: 7px;
-  /* TODO instead of margin-top, so line-height: 7px; */
 }
 
 .level-btns {
@@ -281,10 +258,6 @@ table {
   background-color: #98c5c6;
 }
 
-.manual-mode-msg {
-  /* font-size: 1em; */
-}
-
 .undo {
   width: 150px;
   height: 45px;
@@ -355,7 +328,11 @@ table {
 /* Characters and Speech Bubbles Effects */
 
 .exterminator-effect-container,
-.mega-hint-effect-container {
+.mega-hint-effect-container,
+.up-right-corner-container,
+.up-left-corner-container,
+.bottom-right-corner-container,
+.bottom-left-corner-container {
   position: absolute;
   opacity: 0;
   transition: 0.8s;
@@ -366,8 +343,12 @@ table {
   left: 70%;
 }
 
-.superman-exterminator-speech,
-.batman-mega-hint-speech {
+.exterminator-speech,
+.mega-hint-speech,
+.up-right-corner-speech,
+.up-left-corner-speech,
+.bottom-right-corner-speech,
+.bottom-left-corner-speech {
   width: 150px;
   border-radius: 15px;
   background: white;
@@ -378,7 +359,7 @@ table {
   position: absolute;
 }
 
-.superman-exterminator-speech {
+.exterminator-speech {
   left: 55%;
   bottom: 97%;
 }
@@ -396,7 +377,7 @@ table {
   bottom: -19px;
 }
 
-.superman-exterminator {
+.exterminator-img {
   width: 200px;
 }
 
@@ -405,7 +386,7 @@ table {
   left: 21%;
 }
 
-.batman-mega-hint-speech {
+.mega-hint-speech {
   left: -95%;
   bottom: 97%;
 }
@@ -423,27 +404,81 @@ table {
   bottom: -19px;
 }
 
-.batman-mega-hint {
+.mega-hint-img {
   width: 135px;
 }
 
-.up-right-corner-img {
-  width: 135px;
-  position: absolute;
-  left: 75%;
-  bottom: 65%;
+/* Desktop Screen Size*/
+
+.up-right-corner-container {
+  left: 73%;
+  bottom: 70%;
 }
 
-.up-left-corner-img {
-  width: 135px;
+.up-right-corner-speech {
+  left: 60%;
+  bottom: 100%;
 }
 
-.bottom-right-corner-img {
-  width: 135px;
+.up-left-corner-container {
+  left: 20%;
+  bottom: 70%;
 }
 
+.up-left-corner-speech {
+  right: 50%;
+  bottom: 110%;
+}
+
+.bottom-right-corner-container {
+  left: 73%;
+  bottom: 25%;
+}
+
+.bottom-right-corner-speech {
+  left: 55%;
+  bottom: 100%;
+}
+
+.bottom-left-corner-container {
+  left: 20%;
+  bottom: 25%;
+}
+
+.bottom-left-corner-speech {
+  right: 50%;
+  bottom: 100%;
+}
+
+.up-right-corner-img,
+.up-left-corner-img,
+.bottom-right-corner-img,
 .bottom-left-corner-img {
-  width: 135px;
+  width: 170px;
+}
+
+/* Laptop Screen Size */
+
+@media (width <= 1600px) and (height <= 1000px) {
+  .up-right-corner-container {
+    left: 75%;
+    bottom: 53%;
+  }
+
+  .up-left-corner-container {
+    left: 16%;
+    bottom: 53%;
+  }
+
+  .bottom-right-corner-container {
+    left: 71%;
+    bottom: -15%;
+  }
+
+  .bottom-left-corner-container {
+    left: 16%;
+    bottom: -15%;
+  }
 }
 
 /* How To Play */
@@ -478,7 +513,7 @@ table {
 }
 
 .how-to-play-modal {
-  width: 70%;
+  width: 60%;
   margin: 0;
   padding: 1.5%;
   display: none;
@@ -492,6 +527,12 @@ table {
   box-shadow: 0px -1px 14px 4px rgba(0, 0, 0, 0.75);
 }
 
+@media (width <= 1600px) and (height <= 1000px) {
+  .how-to-play-modal {
+    top: 70%;
+  }
+}
+
 .how-to-play-modal button {
   margin-inline-start: 97%;
   cursor: pointer;
@@ -502,6 +543,7 @@ table {
 h2 {
   margin-block-start: 0px;
   text-align: center;
+  font-size: xx-large;
 }
 
 .how-to-play-modal h1 {
@@ -511,7 +553,8 @@ h2 {
 .how-to-play-modal h3,
 ul,
 li {
-  margin-inline-start: 10%;
+  margin-inline-start: 8%;
+  font-size: x-large;
 }
 
 .how-to-play-modal li span {

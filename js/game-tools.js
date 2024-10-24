@@ -99,27 +99,28 @@ function renderSafe(cords = false) {
 function onManual(elManual) {
   const elManualMsg = document.querySelector('.manual-mode-msg')
   const elTable = document.querySelector('table')
-  const lvlSize = gLevel.SIZE
-  const lvlMines = gMinesLocations.length
-  const lvl = gLevel.LEVEL
+  const minesAmount = gMinesLocations.length
+  const lvl = gLevel.LEVEL.toLowerCase()
 
   if (elManual.innerText === 'Start') {
-    if (lvlMines < 3) {
+    if (minesAmount < 3) {
       elManualMsg.innerText = 'Add more mines'
       return
     }
-    onInit({ s: lvlSize, m: lvlMines, l: lvl }, false, true)
+    onInit(lvl, false, true)
 
     startGame({})
     gGame.isManual = false
 
+    gLevel.MINES = minesAmount
+    renderTotalHiddenMines()
     elTable.classList.remove('manual')
     elManual.innerText = 'Manual Mode'
     elManualMsg.innerText = ''
     return
   }
 
-  onInit({ s: lvlSize, m: gLevel.MINES, l: lvl }, false, true)
+  onInit(lvl, false, true)
   gMinesLocations = []
 
   elTable.classList.add('manual')
@@ -208,7 +209,7 @@ function onMegaHint(elMegaHint) {
 
   gGame.megaHint.isMegaHint = true
   elMegaHint.classList.add('btn-off')
-  renderBatman()
+  megaHintEffect()
 }
 
 function getMegaHintCords(cords) {
@@ -276,7 +277,7 @@ function onExterminator(elExterminator) {
 
   gMinesLocations = []
   elExterminator.classList.add('btn-off')
-  renderSuperman()
+  exterminatorEffect()
 }
 
 function updateMinesLocations() {
@@ -309,22 +310,6 @@ function removeMine(cords) {
 
   renderCell(cords, '', false)
   renderTotalHiddenMines()
-}
-
-function renderSuperman() {
-  const elSuperman = document.querySelector('.exterminator-effect-container')
-  elSuperman.style.opacity = 1
-  setTimeout(() => {
-    elSuperman.style.opacity = 0
-  }, 5000)
-}
-
-function renderBatman() {
-  const elBatman = document.querySelector('.mega-hint-effect-container')
-  elBatman.style.opacity = 1
-  setTimeout(() => {
-    elBatman.style.opacity = 0
-  }, 5000)
 }
 
 // best score

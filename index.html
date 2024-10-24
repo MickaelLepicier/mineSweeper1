@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <title>LEGO MineSweeper</title>
-    <link rel="icon" type="image/png" href="img/LEGO_logo.png" />
+    <link rel="icon" type="image/png" href="img/LEGO-logo.png" />
     <link rel="stylesheet" href="css/main.css" />
   </head>
   <body onload="onInit()" mouseup="onKey(event)" onkeyup="onKey(event)">
     <div class="board-game">
       <div class="win-lose-logo"></div>
-      <div class="win-lose-msg">You Won!</div>
+      <div class="win-lose-msg"></div>
 
       <div class="header">
         <div class="live" title="lives"></div>
@@ -108,44 +108,35 @@
     <!-- Effects and "How to play" modal -->
 
     <div class="exterminator-effect-container">
-      <div class="superman-exterminator-speech sb-left">
-        I removed 3 mines for you!
-      </div>
-      <img
-        class="superman-exterminator"
-        src="img/superman.png"
-        alt="superman"
-      />
+      <div class="exterminator-speech sb-left">I removed 3 mines for you!</div>
+      <img class="exterminator-img" src="img/superman.png" alt="superman" />
     </div>
 
     <div class="mega-hint-effect-container">
-      <div class="batman-mega-hint-speech sb-right">
+      <div class="mega-hint-speech sb-right">
         Press on 2 cells and the whole area will be revealed for 2 seconds
       </div>
-      <img class="batman-mega-hint" src="img/batman.png" alt="batman" />
+      <img class="mega-hint-img" src="img/batman.png" alt="batman" />
     </div>
 
-    <div class="win-lose-effect-container">
-      <div class="up-right-corner-img">
-        <div class="up-right-corner-speech sb-left">BLA BLA BLA</div>
-        <img
-          class="up-right-corner-img"
-          src="img/batman.png"
-          alt="win-lose-img"
-        />
-      </div>
+    <div class="up-right-corner-container">
+      <div class="up-right-corner-speech sb-left"></div>
+      <img class="up-right-corner-img" src="" alt="win-lose-img" />
+    </div>
 
-      <img class="up-left-corner-img" src="img/batman.png" alt="win-lose-img" />
-      <img
-        class="bottom-right-corner-img"
-        src="img/batman.png"
-        alt="win-lose-img"
-      />
-      <img
-        class="bottom-left-corner-img"
-        src="img/batman.png"
-        alt="win-lose-img"
-      />
+    <div class="up-left-corner-container">
+      <div class="up-left-corner-speech sb-right"></div>
+      <img class="up-left-corner-img" src="" alt="win-lose-img" />
+    </div>
+
+    <div class="bottom-right-corner-container">
+      <div class="bottom-right-corner-speech sb-left"></div>
+      <img class="bottom-right-corner-img" src="" alt="win-lose-img" />
+    </div>
+
+    <div class="bottom-left-corner-container">
+      <div class="bottom-left-corner-speech sb-right"></div>
+      <img class="bottom-left-corner-img" src="" alt="win-lose-img" />
     </div>
 
     <div class="how-to-play-modal">
@@ -198,14 +189,9 @@
       </h2>
     </div>
 
-    <!-- <div class="win-lose-modal">
-      <button onclick="closeModal('.win-lose-modal')">X</button>
-      <h1 class="win-lose-msg"></h1>
-      <img class="win-lose-img" src="" alt="win-lose-img" />
-    </div> -->
-
     <script src="js/game.js"></script>
     <script src="js/game-tools.js"></script>
+    <script src="js/game-effects.js"></script>
     <script src="js/utils.js"></script>
   </body>
 </html>

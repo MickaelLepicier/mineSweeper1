@@ -1,143 +1,5 @@
 'use strict'
 
-// console.log("js working");
-
-// TODO-1
-// look at the message and make the code better
-// look at the recording and make the code better
-// ask for CR in the open room
-
-// keyboard shortcuts Links:
-
-// https://support.apple.com/en-il/102650
-
-// https://www.computerworld.com/article/1630407/30-keyboard-shortcuts-mac-users-need-to-know.html
-
-/*
-
-V In css font-size we prefer to use em. (2em is around 32px)
-
-V In css use -- to create  inside the css and it will make code shorter and better
-
-V Names of Files will be with - and not with big letters
-
-V Names of Folders will always be single name as - img, sound and not as - imgs, sounds
-
-V All the code will be without ;
-
-V In github write in the commit exactly what you have beet updated
-
-V check and train yourself more about keyboard shortcuts: https://support.apple.com/en-il/102650
-
-V In HTML the order of the JS files that we draws are from the important to the less important -> main.js and below utils.js
-
-V Create more js files to be more organize - game.js , game-tools.js , and more if needed
-
-V In render use repeat instead of loops
-
-V In JS it is better to change the class then the direct style
-
-V In sound the files will always be on mp3
-
-
-
-
----------------------------------------------------------------------------------------------------------------------------------------
-
-
-CSS lesson:
-
-no no for px
-
-1. text-align: justify
-
-2. on top of every css: bsb
-* { 
-box-sizing: border-box
-}
-or in short - bsb
-
-3. overflow
-overflow: hidden
-overflow: scroll
-overflow-x: scroll
-overflow-y: hidden
-
-4. outline
-
-5. direction: rtl
-
-6. writing-mode: vertical-rl
-
-7. instead of padding-left we use - logical properties (padding-inline-start)
-
-8. line-height
- 
-9. width: 50vh - use more vh or vw instead of px or %
-
-10. calc() - function that calculate different units as 10vh - 5px
-example =  min-height: calc(10vh - 5px)
-calc() can be very good to put footer on the bottom of the page.
-
-
-11. very good for block of text:
-width: ...vh
-max-width: 75ch  (ch is for characters, 75 is for the best length of the line)
- 
- or in short = width: min(...vh, 75ch)
-
-12. use css variables
-
-:root {
---code...
-}
-
-13. instead of
-border-left -> border-inline-start
-border-bottom -> border-block-end
-
-14. :first-child{}
-:last-child{}
-:nth-child(even){}
-:nth-child(3n){}
-:nth-child(3n+2){}
-
-14.
-    .class .class2{}    // effects each class2 that a child of class (class2 inside class)
-   .class.class2{}     // effects each element that has class2 AND class 
-  .class, .class2{}   // effects each element that has class2 OR class 
-.class > .class2{}   // effects each element class2 that direct descendant of class 
-
-
-// TODO about CSS - play the games:
-// https://flukeout.github.io/
-// https://www.w3schools.com/css/exercise.asp
-
-
----------------------------------------------------------------------------------------------------------------------------------------
-
-
-TODO - watch Yaron speaking about my project 
-
-"ברגע שנדע את להשתמש ב7 הכלים שיש למתכנת, נדע לעבוד עם כל שפת תכנות שיש"
-משתנים, ביטויים, תנאים, לולאות, פונקציות, מערכים ואובייקטים
-יש אותם בכל שפות התכנות, ברגע שאנחנו שולטים בהם אז יהיה לנו קל יותר ללמוד כל שפת תכנות שיש
-
-
-בספרינט שלי:
-אני שם transition  ברקורסיה
-
-*/
-
-// TODO-2 later on I can do this as well:
-// Win lose modal ?
-// Maybe put some music
-// Maybe put lego buttons on the board
-
-// link : https://www.pngegg.com/en/png-wlthb
-
-// UNDO is not working on mega hint and exterminator, and thats ok :)
-
 let gBoard
 
 let gGame
@@ -156,8 +18,12 @@ const NORMAL = `<img class="level-img" src="img/head-normal.png" alt="head">`
 const HARD = `<img class="level-img" src="img/head-hard.png" alt="head">`
 
 const WINLOSE = `<img class="win-lose-logo-img" src="img/LEGO-logo.png" alt="lego-logo">`
-const WON = `<img class="win-lose-logo-img" src="img/head-won.png" alt="head">`
+const WIN = `<img class="win-lose-logo-img" src="img/head-win.png" alt="head">`
 const LOSE = `<img class="win-lose-logo-img" src="img/head-lose.png" alt="head">`
+
+const mineSound = new Audio('../sound/mine-explosion.mp3')
+const winSound = new Audio('../sound/win.mp3')
+const loseSound = new Audio('../sound/lose.mp3')
 
 function onInit(gameLevel, clearStorage = true, onManual = false) {
   gGame = {
@@ -192,6 +58,7 @@ function onInit(gameLevel, clearStorage = true, onManual = false) {
   render()
 
   document.querySelector('.win-lose-logo').innerHTML = WINLOSE
+  document.querySelector('.win-lose-msg').innerHTML = ''
   document.querySelector('.mega-hint').classList.remove('btn-off')
   document.querySelector('.exterminator').classList.remove('btn-off')
 }
@@ -318,6 +185,7 @@ function onCellClicked(elCell, i, j) {
 
     gGame.lives--
     gGame.minesShownCount++
+    mineSound.play()
 
     renderLives(gGame.lives)
     renderTotalHiddenMines()
@@ -379,6 +247,7 @@ function startGame(cellClickedCords) {
   addMines(cellClickedCords, gGame.isManual)
   renderBoard(gBoard)
   startTimer()
+  winLoseEffect()
 }
 
 function addMines(cellClickedCords, isManual = false) {
@@ -400,8 +269,6 @@ function addMines(cellClickedCords, isManual = false) {
     gBoard[randomCords.i][randomCords.j].isMine = true
   }
 }
-// TODO create update win-lose-modal or make the win lose of 2 superman and batman imgs
-// think about it
 
 function checkGameOver() {
   const isAllCellsShown = gGame.shownCount === gLevel.SIZE ** 2 - gLevel.MINES
@@ -411,16 +278,25 @@ function checkGameOver() {
   // LOSE condition
   if (!gGame.lives) {
     document.querySelector('.win-lose-logo').innerHTML = LOSE
+    document.querySelector('.win-lose-msg').innerHTML = 'You Lost...'
     gGame.isOn = false
+    loseSound.play()
+
     revealMines()
     stopTimer()
+    winLoseEffect(false)
 
-    // WON condition
+    // WIN condition
   } else if (gGame.lives && isAllCellsShown && isAllMinesMarked) {
-    document.querySelector('.win-lose-logo').innerHTML = WON
+    document.querySelector('.win-lose-logo').innerHTML = WIN
+    document.querySelector('.win-lose-msg').innerHTML = 'You Win!'
+
     bestScore()
     gGame.isOn = false
+    winSound.play()
+
     stopTimer()
+    winLoseEffect(true)
   }
 }
 

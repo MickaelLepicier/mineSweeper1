@@ -1,7 +1,5 @@
 'use strict'
 
-// console.log("js utils working");
-
 function getCellContent(cell) {
   let cellContent = ''
   if (cell.isMarked) {

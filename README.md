@@ -43,10 +43,14 @@ Just open index.html in your favorite browser — no build step required.
 
 ## 📦 Project Status
 
-**Phase 1** - Core functionality
+Core functionality:
+
 ✅ Basic grid + mine generation
+
 ✅ Tile reveal & mine detection
+
 ✅ Flagging system
+
 🛠 Working on styling & difficulty settings
 
 

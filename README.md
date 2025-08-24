@@ -28,6 +28,10 @@ We’re creating a modern music web app that focuses on:
 
 ## 🚀 Getting Started
 
+Click this [link](https://mickaellepicier.github.io/mineSweeper1/)
+
+or
+
 1. Clone the repo:
    
 ```bash

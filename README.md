@@ -44,14 +44,10 @@ Just open index.html in your favorite browser — no build step required.
 ## 📦 Project Status
 
 Core functionality:
-
-✅ Basic grid + mine generation
-
-✅ Tile reveal & mine detection
-
-✅ Flagging system
-
-🛠 Working on styling & difficulty settings
+- ✅ Basic grid + mine generation
+- ✅ Tile reveal & mine detection
+- ✅ Flagging system
+- 🛠 Working on styling & difficulty settings
 
 
 ---
